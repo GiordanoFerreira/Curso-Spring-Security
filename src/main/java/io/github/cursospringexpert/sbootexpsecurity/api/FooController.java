@@ -1,6 +1,7 @@
 package io.github.cursospringexpert.sbootexpsecurity.api;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,5 +22,11 @@ public class FooController {
                 + " Senhas: " +  authentication.getCredentials()
                 + " Detalhes da autenticação: " + authentication.getDetails()
                 + " Dados do usuário: " + authentication.getPrincipal());
+    }
+
+    @GetMapping("/admin")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<String> adminRoute(){
+        return ResponseEntity.ok("Rota admin ok!");
     }
 }
